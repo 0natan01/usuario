@@ -2,16 +2,16 @@ package com.example.usuario.controller;
 
 import com.example.usuario.business.UsuarioService;
 import com.example.usuario.business.dto.UsuarioDto;
+import com.example.usuario.infrastructure.entity.Usuario;
 import com.example.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +33,11 @@ public class UsuarioController {
                 new UsernamePasswordAuthenticationToken(usuarioDto.getEmail() , usuarioDto.getSenha())
         );
         return "Bearer" +  jwtUtil.generateToken(authentication.getName());
+    }
+
+    @GetMapping
+    public List<Usuario>  listaUsuarios(){
+        return usuarioService.listarUsuarios() ;
     }
 
 }
