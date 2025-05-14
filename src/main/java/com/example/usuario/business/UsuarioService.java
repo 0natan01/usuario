@@ -4,12 +4,13 @@ import com.example.usuario.business.converter.UsuarioConverter;
 import com.example.usuario.business.dto.UsuarioDto;
 import com.example.usuario.infrastructure.entity.Usuario;
 import com.example.usuario.infrastructure.exceptions.ConflictExeptions;
+import com.example.usuario.infrastructure.exceptions.ResourceNotFoundException;
 import com.example.usuario.infrastructure.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +42,12 @@ public class UsuarioService {
         return usuarioRepository.existsByEmail(email);
     }
 
-    public List<Usuario> listarUsuarios(){
-        return usuarioRepository.findAll();
+    public Usuario buscarUsuarioPorEmail(String email){
+        return usuarioRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("Email nao encontrado" + email));
+   }
+
+    public void deletarUsuarioPorEmail(String email){
+        usuarioRepository.deleteByEmail(email);
     }
 }
