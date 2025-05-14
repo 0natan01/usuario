@@ -22,7 +22,7 @@ public class UsuarioController {
     private final AuthenticationManager authenticationManager;
 
     @PostMapping
-    public ResponseEntity<UsuarioDto>  salvaUsuario(@RequestBody UsuarioDto usuarioDto){
+    public ResponseEntity<UsuarioDto> salvaUsuario(@RequestBody UsuarioDto usuarioDto){
         return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDto));
     }
 
@@ -35,9 +35,16 @@ public class UsuarioController {
         return "Bearer" +  jwtUtil.generateToken(authentication.getName());
     }
 
+
     @GetMapping
-    public List<Usuario>  listaUsuarios(){
-        return usuarioService.listarUsuarios() ;
+    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam String email){
+        return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
+
+   @DeleteMapping("/{email}")
+    public ResponseEntity<Void> deletarUsuarioPorEmail(@PathVariable String email){
+        usuarioService.deletarUsuarioPorEmail(email);
+        return ResponseEntity.ok().build();
+   }
 
 }
