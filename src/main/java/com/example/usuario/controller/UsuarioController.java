@@ -1,8 +1,10 @@
 package com.example.usuario.controller;
 
 import com.example.usuario.business.UsuarioService;
+import com.example.usuario.business.dto.EnderecoDto;
+import com.example.usuario.business.dto.TelefoneDto;
 import com.example.usuario.business.dto.UsuarioDto;
-import com.example.usuario.infrastructure.entity.Usuario;
+
 import com.example.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -37,7 +38,7 @@ public class UsuarioController {
 
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam String email){
+    public ResponseEntity<UsuarioDto> buscaUsuarioPorEmail(@RequestParam String email){
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 
@@ -47,4 +48,21 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
    }
 
+   @PutMapping
+    public ResponseEntity<UsuarioDto> atualizaDadosUsuario(@RequestBody UsuarioDto dto ,
+                                                           @RequestHeader("Authorization") String token){
+        return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(dto , token));
+   }
+
+   @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDto> atualizaEndereco(@RequestBody EnderecoDto dto,
+                                                        @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto));
+   }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDto> atualizaTelefone(@RequestBody TelefoneDto dto,
+                                                        @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto));
+    }
 }
