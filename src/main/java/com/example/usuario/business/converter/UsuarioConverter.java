@@ -12,7 +12,7 @@ import java.util.List;
 
 @Component
 public class UsuarioConverter {
-    public Usuario paraUsuario(UsuarioDto usuarioDto){
+    public Usuario paraUsuario(UsuarioDto usuarioDto) {
         return Usuario.builder()
                 .nome(usuarioDto.getNome())
                 .email(usuarioDto.getEmail())
@@ -22,11 +22,11 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public List<Endereco> paraListaEndereco(List<EnderecoDto> enderecoDtos){
+    public List<Endereco> paraListaEndereco(List<EnderecoDto> enderecoDtos) {
         return enderecoDtos.stream().map(this::paraEndereco).toList();
     }
 
-    public  Endereco paraEndereco(EnderecoDto enderecoDto){
+    public Endereco paraEndereco(EnderecoDto enderecoDto) {
         return Endereco.builder()
                 .rua(enderecoDto.getRua())
                 .numero(enderecoDto.getNumero())
@@ -37,18 +37,18 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public List<Telefone> paraListaTelefone(List<TelefoneDto> telefoneDtos){
+    public List<Telefone> paraListaTelefone(List<TelefoneDto> telefoneDtos) {
         return telefoneDtos.stream().map(this::paraTelefone).toList();
     }
 
-    public Telefone paraTelefone(TelefoneDto telefoneDto){
+    public Telefone paraTelefone(TelefoneDto telefoneDto) {
         return Telefone.builder()
                 .ddd(telefoneDto.getDdd())
                 .numero(telefoneDto.getNumero())
                 .build();
     }
 
-    public UsuarioDto paraUsuarioDto(Usuario usuario){
+    public UsuarioDto paraUsuarioDto(Usuario usuario) {
         return UsuarioDto.builder()
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
@@ -58,11 +58,11 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public List<EnderecoDto> paraListaEnderecoDto(List<Endereco> endereco){
+    public List<EnderecoDto> paraListaEnderecoDto(List<Endereco> endereco) {
         return endereco.stream().map(this::paraEnderecoDto).toList();
     }
 
-    public  EnderecoDto paraEnderecoDto(Endereco endereco){
+    public EnderecoDto paraEnderecoDto(Endereco endereco) {
         return EnderecoDto.builder()
                 .id(endereco.getId())
                 .rua(endereco.getRua())
@@ -74,11 +74,11 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public List<TelefoneDto> paraListaTelefoneDto(List<Telefone> telefone){
+    public List<TelefoneDto> paraListaTelefoneDto(List<Telefone> telefone) {
         return telefone.stream().map(this::paraTelefoneDto).toList();
     }
 
-    public TelefoneDto paraTelefoneDto(Telefone telefone){
+    public TelefoneDto paraTelefoneDto(Telefone telefone) {
         return TelefoneDto.builder()
                 .id(telefone.getId())
                 .ddd(telefone.getDdd())
@@ -86,7 +86,7 @@ public class UsuarioConverter {
                 .build();
     }
 
-    public Usuario updateUsuario(UsuarioDto usuarioDto , Usuario entity){
+    public Usuario updateUsuario(UsuarioDto usuarioDto, Usuario entity) {
         return Usuario.builder()
                 .nome(usuarioDto.getNome() != null ? usuarioDto.getNome() : entity.getNome())
                 .id(entity.getId())
@@ -98,7 +98,7 @@ public class UsuarioConverter {
     }
 
 
-    public  Endereco updateEndereco(EnderecoDto dto , Endereco entity){
+    public Endereco updateEndereco(EnderecoDto dto, Endereco entity) {
         return Endereco.builder()
                 .id(entity.getId())
                 .rua(dto.getRua() != null ? dto.getRua() : entity.getRua())
@@ -111,13 +111,32 @@ public class UsuarioConverter {
     }
 
 
-    public  Telefone updateTelefone(TelefoneDto dto , Telefone entity){
+    public Telefone updateTelefone(TelefoneDto dto, Telefone entity) {
         return Telefone.builder()
                 .id(entity.getId())
                 .ddd(dto.getDdd() != null ? dto.getDdd() : entity.getDdd())
                 .numero(dto.getNumero() != null ? dto.getNumero() : entity.getNumero())
                 .build();
-}
+    }
 
+    public Endereco paraEnderecoEntity(EnderecoDto dto , Long idUsuario ){
+        return Endereco.builder()
+                .complemento(dto.getComplemento())
+                .rua(dto.getRua())
+                .numero(dto.getNumero())
+                .cidade(dto.getCidade())
+                .estado(dto.getEstado())
+                .cep(dto.getCep())
+                .usuario_id(idUsuario)
+                .build();
+    }
+
+    public Telefone paraTelefoneEntity(TelefoneDto dto , Long idUsuario){
+        return Telefone.builder()
+                .numero(dto.getNumero())
+                .ddd(dto.getDdd())
+                .usuario_id(idUsuario)
+                .build();
+    }
 }
 
