@@ -36,7 +36,6 @@ public class UsuarioService {
         return usuarioConverter.paraUsuarioDto(usuario);
     }
 
-
     public void emailExiste(String email){
         try{
             boolean existe = verificaEmailExistente(email);
