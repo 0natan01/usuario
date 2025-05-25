@@ -16,7 +16,6 @@ public class JwtUtil {
     private final String secretKey = "sua-chave-secreta-super-segura-que-deve-ser-bem-longa";
 
 
-
     // Gera um token JWT com o nome de usuário e validade de 1 hora
     public String generateToken(String username) {
         return Jwts.builder()
