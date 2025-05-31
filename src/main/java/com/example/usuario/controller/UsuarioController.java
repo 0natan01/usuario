@@ -66,6 +66,8 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto));
     }
 
+
+
     @PostMapping("/endereco")
     public ResponseEntity<EnderecoDto> cadastroEndereco(@RequestBody EnderecoDto dto,
                                                        @RequestHeader("Authorization") String token){
